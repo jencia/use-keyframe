@@ -1,0 +1,61 @@
+name: 发布和部署
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-deploy:
+    name: 发布和部署
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: 拉取项目
+      uses: actions/checkout@master
+    - name: 打包构建
+      uses: actions/setup-node@master
+      with:
+        node-version: '12.x'
+
+    - name: 安装依赖
+      run: npm install
+    - name: 构建
+      run: npm run build
+    - name: 打包
+      run: tar -zcvf release.tgz use-keyframe
+
+    - name: 发布
+      id: create_release
+      uses: actions/create-release@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+
+    - name: 上传
+      id: upload-release-asset
+      uses: actions/upload-release-asset@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./release.tgz
+        asset_name: release.tgz
+        asset_content_type: application/x-tgz
+
+    - name: 部署
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd /root/demo/static-project
+          rm -rf use-keyframe
+          wget https://github.com/jencia/use-keyframe/releases/latest/download/release.tgz
+          tar -zxvf release.tgz
+          rm -f release.tgz

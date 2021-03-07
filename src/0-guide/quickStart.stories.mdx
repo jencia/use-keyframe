@@ -1,0 +1,26 @@
+import { Meta, Preview, Story } from '@storybook/addon-docs/blocks';
+
+<Meta title="Guide|QuickStart" />
+
+# 快速入门
+
+## 安装
+
+暂时还没发布
+
+## 使用
+
+```jsx
+import { useKeyframe } from 'use-keyframe';
+
+export default () => {
+  const [n] = useKeyframe(2000);
+
+  return <div style={{ transform: `translateX(${n * 300}px)` }}></div>;
+}
+```
+
+<Preview>
+  <Story id="core-usekeyframe--demo-1" />
+</Preview>
+

@@ -1,0 +1,46 @@
+import { Story, Preview } from '@storybook/addon-docs/blocks';
+
+<Story id="core-usekeyframe--syntax" />
+
+# useKeyframe
+
+语法：
+
+```ts
+const [elapsed, frame] = useKeyframe(duration: number, easing: string|(number => number));
+```
+
+参数说明：
+
+- `duration`：动画持续时间，默认为1000，单位为毫秒
+- `easing`：动画运动曲线，默认为 `'linear'`, 值是字符串时使用 [预设值](https://github.com/streamich/ts-easing/blob/master/src/index.ts) ，预设值对应的运动效果可到 [这里](https://www.createjs.com/demos/tweenjs/tween_sparktable) 查看，后续会整合一下。如果值是函数则代表自定义运动曲线。
+- `elapsed`：经过时间，还没开始执行动画前为 0 ，动画结束后为 1 ，动画运动过程中就是 0 到 1 之间。
+- `frame`：帧对象，包含了一些动画属性和方法。
+  - `progress`：当前运动进度，值为0到1。
+  - `paused`：是否暂停。
+  - `completed`：是否已完成动画，正向运动 `elapsed` 为 1 时视为已完成，反向运动为 0 时视为已完成。
+  - `reversed`：是否正处于反向运动
+  - `start(isReverse?: boolean)`：从当前位置开始执行动画，若 `isReverse` 没传值则代表当前方向。此方法处于静止状态或者以相反的运动方向执行才能生效。
+  - `play()`：以正向运动方向执行动画。
+  - `reverse()`：以反向运动方向执行动画。
+  - `pause()`：暂停动画。
+  - `restart()`：从头开始执行动画，以正向方向运动。
+  - `seek(currentElapsed: number, isReverse?: boolean)`：暂停动画，并移动到指定位置。
+  - `useOnComplete(fn: () => void)`: 用于监听动画完成事件的 hook 方法
+
+## 示例
+
+<Preview isColumn>
+  <h4 className="preview-title">基本使用</h4>
+  <Story id="core-usekeyframe--demo-1" />
+</Preview>
+
+<Preview isColumn>
+  <h4 className="preview-title">无限来回运动</h4>
+  <Story id="core-usekeyframe--demo-2" />
+</Preview>
+
+<Preview isColumn>
+  <h4 className="preview-title">综合例子</h4>
+  <Story id="core-usekeyframe--demo-3" />
+</Preview>

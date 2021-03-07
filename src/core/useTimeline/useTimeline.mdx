@@ -1,0 +1,35 @@
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+
+<Story id="core-usetimeline--syntax" />
+
+# useTimeline
+
+语法：
+
+```ts
+type keyframeType = [keyframe, any, any?];
+const [data, timeline] = useTimeline(keyframeType[]);
+```
+
+参数说明：
+
+`useTimeline` 接收一个参数，值为一个数组，里面的元素都是 `keyframeType` 类型。
+
+- `keyframeType`
+  - `keyframe`：关键帧动画的执行结果，返回值与 `useKeyframe` 一致即可。
+  - 第二个参数当前阶段动画的终点值。
+  - 第三个参数是延迟时间，传字符串会转成数字，传函数会取执行后的返回值，传数字直接使用，其他类型或者传负数都会当成0处理。
+- `data`：根据各个阶段动画的进度和终点值算出的当前动画数据
+- `timeline`: 基本与 `useKeyframe` 一致，不同的是如下
+  - `start(isReverse?: boolean, stepCount?: number)`：多了第二个参数，用来指定运动步数，一步代表一个阶段的动画。
+  - `nextStep(stepCount?: number, isReverse?: boolean)`：逐步运动，可以指定运动步数和方向。
+
+<Preview isColumn>
+  <h4 className="preview-title">基本使用</h4>
+  <Story id="core-usetimeline--demo-1" />
+</Preview>
+
+<Preview isColumn>
+  <h4 className="preview-title">综合例子</h4>
+  <Story id="core-usetimeline--demo-2" />
+</Preview>
