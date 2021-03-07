@@ -1,6 +1,6 @@
 {
   "name": "use-keyframe",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "jencia",
   "description": "react hook 关键帧动画开发解决方案",
   "repository": "https://github.com/jencia/use-keyframe",
