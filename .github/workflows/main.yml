@@ -54,7 +54,7 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          cd /root/demo/static-project
+          cd /root
           rm -rf use-keyframe
           wget https://github.com/jencia/use-keyframe/releases/latest/download/release.tgz
           tar -zxvf release.tgz
